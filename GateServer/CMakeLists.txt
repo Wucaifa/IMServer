@@ -6,6 +6,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_definitions(-DGLIBCXX_USE_CXX11_ABI=0)
 
+# 设置可执行文件输出目录为 bin
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+
 # === 设置 vcpkg 工具链 ===
 if (NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(CMAKE_TOOLCHAIN_FILE "/home/wu/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file" FORCE)
@@ -13,6 +16,9 @@ endif()
 
 # === 让 CMake 直接查找 vcpkg 的安装路径 ===
 set(CMAKE_PREFIX_PATH "/home/wu/vcpkg/installed/x64-linux" CACHE STRING "vcpkg installed packages" FORCE)
+
+# 将资源文件拷贝到 bin 目录下
+file(COPY ${CMAKE_SOURCE_DIR}/res/ DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/res)
 
 # === 确保 CMake 能找到 JSONCPP、hiredis、mysqlcppconn ===
 find_package(Protobuf CONFIG REQUIRED)
@@ -25,6 +31,13 @@ find_package(cryptopp CONFIG REQUIRED)
 # **MySQL 连接库**
 set(MySQL_ROOT "/home/wu/mysql-connector/usr")
 find_library(MySQLConnector_LIB NAMES mysqlcppconn8-static PATHS "${MySQL_ROOT}/lib/x86_64-linux-gnu")
+
+# === 生成 proto 文件 ===
+execute_process(
+    COMMAND bash ${CMAKE_SOURCE_DIR}/proto/generate_protos.sh
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
 
 # === 包含路径 ===
 include_directories(
