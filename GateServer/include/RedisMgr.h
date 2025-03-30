@@ -3,6 +3,9 @@
 #include <hiredis/hiredis.h>
 #include <queue>
 #include "ConfigMgr.h"
+#include <atomic>
+#include <condition_variable>
+#include <cstring>
 
 class RedisConPool {
 public:
