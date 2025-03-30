@@ -1,5 +1,6 @@
 # 忽略 build 文件夹
 GataServer/build/
+GateServer/generated/
 
 # 忽略所有编译生成的文件
 *.o
