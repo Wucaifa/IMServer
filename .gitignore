@@ -3,9 +3,18 @@ GataServer/build/
 GateServer/generated/
 GataServer/bin/
 
-StarServer/build/
-StarServer/generated/
-StarServer/bin/
+StatusServer/build/
+StatusServer/generated/
+StatusServer/bin/
+
+ChatServer/build/
+ChatServer/generated/
+ChatServer/bin/
+
+ChatServer2/build/
+ChatServer2/generated/
+ChatServer2/bin/
+
 
 # 忽略所有编译生成的文件
 *.o
