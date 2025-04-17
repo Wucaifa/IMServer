@@ -6,6 +6,28 @@
 #include "StatusGrpcClient.h"
 
 LogicSystem::LogicSystem() {
+	RegGet("/ping", [](std::shared_ptr<HttpConnection> connection) {
+		// 输出接收到 ping 请求的日志
+		beast::ostream(connection->_response.body()) << "receive ping req " << std::endl;
+	
+		// 处理 GET 请求的查询参数并输出
+		int i = 0;
+		for (const auto& elem : connection->_get_params) {
+			i++;
+			beast::ostream(connection->_response.body()) << "param" << i << " key is " << elem.first;
+			beast::ostream(connection->_response.body()) << ", " << " value is " << elem.second << std::endl;
+		}
+	
+		// // 响应客户端 Pong
+		// beast::ostream(connection->_response.body()) << "Pong response" << std::endl;
+	
+		// // 设置响应状态为 200 OK
+		// connection->_response.result(boost::beast::http::status::ok);
+	
+		// // 设置响应的内容类型
+		// connection->_response.set(boost::beast::http::field::content_type, "text/plain");
+	});
+
 	RegGet("/get_test", [](std::shared_ptr<HttpConnection> connection) {
 		beast::ostream(connection->_response.body()) << "receive get_test req " << std::endl;
 		int i = 0;

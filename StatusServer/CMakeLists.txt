@@ -52,7 +52,7 @@ include_directories(
 )
 
 # === client target ===
-add_executable(GateServer
+add_executable(StatusServer
     generated/message.pb.cc
     generated/message.grpc.pb.cc
     src/AsioIOServicePool.cpp
@@ -66,7 +66,7 @@ add_executable(GateServer
 )
 
 # === 目标链接库 ===
-target_link_libraries(GateServer
+target_link_libraries(StatusServer
     PRIVATE
     protobuf::libprotobuf
     gRPC::grpc++

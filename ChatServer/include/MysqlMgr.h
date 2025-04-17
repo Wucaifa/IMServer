@@ -3,6 +3,9 @@
 #include "MysqlDao.h"
 #include "Singleton.h"
 #include <vector>
+#include <atomic>
+#include <condition_variable>
+#include <cstring>
 
 class MysqlMgr : public Singleton<MysqlMgr>
 {

@@ -19,6 +19,7 @@ public:
 		delete[] _data;
 	}
 
+	// 将 _data 数组的内容清零，并将 _cur_len 置为 0，作用是清空当前的数据缓冲区
 	void Clear() {
 		::memset(_data, 0, _total_len);
 		_cur_len = 0;

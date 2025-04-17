@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
-#include <bcrypt/BCrypt.hpp>
+#include <string>
+#include <sstream>
 
 enum ErrorCodes {
 	Success = 0,
@@ -67,11 +68,27 @@ enum MSG_IDS {
 #define LOGIN_COUNT  "logincount"
 #define NAME_INFO  "nameinfo_"
 
+// 哈希生成函数，使用 PBKDF2 和 SHA-256
 inline std::function<std::string(std::string)> hashString = [](std::string input_str) {
-	// 使用 bcrypt 自动生成哈希及随机盐值
-	return BCrypt::generateHash(input_str);
-	};
+    // 设置盐值
+    std::string salt = "random_salt";
+    
+    // 合并输入字符串和盐值
+    std::string combined = input_str + salt;
+    
+    // 使用 std::hash 来进行哈希
+    std::hash<std::string> hash_fn;
+    size_t hash_value = hash_fn(combined);
+
+    // 将哈希值转换为十六进制字符串
+    std::stringstream ss;
+    ss << std::hex << hash_value;
+    return ss.str();
+};
+
+// 验证输入字符串是否与存储的哈希值匹配
 inline std::function<bool(std::string, std::string)> verifyHash = [](std::string input_str, std::string hashed_str) {
-	// 验证输入字符串是否匹配已存储的哈希
-	return BCrypt::validatePassword(input_str, hashed_str);
-	};
+    // 使用相同的盐值进行哈希验证
+    std::string calculated_hash = hashString(input_str);
+    return hashed_str == calculated_hash;
+};

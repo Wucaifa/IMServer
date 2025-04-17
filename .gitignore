@@ -1,7 +1,7 @@
 # 忽略 build 文件夹
-GataServer/build/
+GateServer/build/
 GateServer/generated/
-GataServer/bin/
+GateServer/bin/
 
 StatusServer/build/
 StatusServer/generated/

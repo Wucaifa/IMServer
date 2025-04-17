@@ -138,6 +138,7 @@ void CSession::AsyncReadHead(int total_len)
 			}
 
 			_recv_head_node->Clear();
+			//  将 _data 的前 bytes_transfered 字节拷贝到 _recv_head_node->_data 中
 			memcpy(_recv_head_node->_data, _data, bytes_transfered);
 
 			//获取头部MSGID数据

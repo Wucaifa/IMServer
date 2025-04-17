@@ -11,6 +11,8 @@
 #include <memory>
 #include <queue>
 #include <mutex>
+#include <condition_variable>
+#include <atomic>
 class SqlConnection {
 public:
 	SqlConnection(sql::Connection* con, int64_t lasttime) :_con(con), _last_oper_time(lasttime) {}
